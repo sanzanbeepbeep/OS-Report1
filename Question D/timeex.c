@@ -10,8 +10,13 @@ void ioBoundOperation() {
         return;
     }
 
-    for (int i = 0; i < 100000; ++i) {
-        fprintf(file, "This is line %d\n", i);
+    // Write 1GB of data (approx. 1024 * 1024 * 1024 bytes)
+    const long long fileSize = 1024LL * 1024LL * 1024LL;
+    const int bufferSize = 1024;  // Buffer size for writing (1KB)
+    char buffer[bufferSize];
+
+    for (long long i = 0; i < fileSize; i += bufferSize) {
+        fwrite(buffer, sizeof(char), bufferSize, file);
     }
 
     fclose(file);
